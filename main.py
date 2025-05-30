@@ -32,16 +32,22 @@ for column in columns:
     print(f'// Value Counts\n{data[column].value_counts()}\n')
     print(f'// Description\n{data[column].describe()}')
 
-# Transform columns to categorical
-data[['Churn', 'Gender', 'SeniorCitizen', 'Partner', 'Dependents', 'PhoneService', 'MultipleLines', 'InternetService', 'OnlineSecurity', 'OnlineBackup', 'DeviceProtection', 'TechSupport', 'StreamingTV', 'StreamingMovies', 'Contract', 'PaperlessBilling', 'PaymentMethod']] = data[['Churn', 'Gender', 'SeniorCitizen', 'Partner', 'Dependents', 'PhoneService', 'MultipleLines', 'InternetService', 'OnlineSecurity', 'OnlineBackup', 'DeviceProtection', 'TechSupport', 'StreamingTV', 'StreamingMovies', 'Contract', 'PaperlessBilling', 'PaymentMethod']].astype('category')
-
 # Normalize SeniorCitizen status
 data['SeniorCitizen'] = ['Yes' if x == 1 else 'No' for x in data['SeniorCitizen']]
 
 # Normalize Churn status
 missing_indices = data[data['Churn'] == ''].index # Find indices with missing values
-alternating_values = ['Yes' if x % 2 == 1 else 'No' for x in range(len(missing_indices))]
-data.loc[missing_indices, 'Churn'] = alternating_values
+known_churn = data[data['Churn'].isin(['Yes', 'No'])]
+yes_ratio = len(known_churn[known_churn['Churn'] == 'Yes']) / len(known_churn) # Find the  ratio of "Yes" to "No"
+
+churn_interpolation = ['Yes' if x < len(missing_indices) * yes_ratio else 'No' for x in range(len(missing_indices))] # Interpolate missing values
+data.loc[missing_indices, 'Churn'] = churn_interpolation
+
+# Transform columns to categorical
+data[['Churn', 'Gender', 'SeniorCitizen', 'Partner', 'Dependents', 'PhoneService', 'MultipleLines', 'InternetService', 'OnlineSecurity', 'OnlineBackup', 'DeviceProtection', 'TechSupport', 'StreamingTV', 'StreamingMovies', 'Contract', 'PaperlessBilling', 'PaymentMethod']] = data[['Churn', 'Gender', 'SeniorCitizen', 'Partner', 'Dependents', 'PhoneService', 'MultipleLines', 'InternetService', 'OnlineSecurity', 'OnlineBackup', 'DeviceProtection', 'TechSupport', 'StreamingTV', 'StreamingMovies', 'Contract', 'PaperlessBilling', 'PaymentMethod']].astype('category')
+
+# Create daily statistics
+data['Daily'] = data['Monthly'] / 30
 
 # #
 # Load
