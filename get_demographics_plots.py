@@ -18,6 +18,7 @@ def get_demographics_plots(df, title, xlim):
     combo_counts.columns = ['Group', 'Count']
     fig_general_demographics = bar_plot(
         title=title,
+        legend_title="Pessoas",
         x=combo_counts['Group'],
         y=combo_counts['Count'],
         xlabel='Grupos: P=Parceiro, T=Terceira Idade, D=Dependentes',
@@ -34,7 +35,10 @@ def get_demographics_plots(df, title, xlim):
 
     outer_labels = ['Parceiro', 'Solteiros']
     inner_labels = ['T', 'D', 'Outros', 'Outros', 'D', 'T']
-    fig_distribution_demographics = nested_pie_plot(title, vals=vals, inner_labels=inner_labels, outer_labels=outer_labels, subtitle="Grupos: T=Terceira Idade, D=Dependentes")
+    try:
+        fig_distribution_demographics = nested_pie_plot(title, vals=vals, inner_labels=inner_labels, outer_labels=outer_labels, subtitle="Grupos: T=Terceira Idade, D=Dependentes")
+    except ValueError as e:
+        print("Caught ValueError:", e)
 
     # Positive distribution (is X)
     binary_columns = [col for col in df.columns if set(df[col].dropna().unique()) <= {'Yes', 'No'}]
@@ -68,7 +72,7 @@ def get_demographics_plots(df, title, xlim):
         )
 
     return (fig_general_demographics,
-            fig_distribution_demographics,
+            fig_distribution_demographics, # type: ignore
             fig_positive_demographics,
             fig_seniority_demographics,
             fig_gender_demographics)

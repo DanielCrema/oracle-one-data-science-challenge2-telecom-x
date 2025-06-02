@@ -19,7 +19,7 @@ def pie_plot(title, labels, sizes, palette='pastel'):
     fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(aspect="equal"))
     colors = sns.color_palette(palette)[0:len(sizes)]
 
-    wedges, texts, autotexts = ax.pie(
+    wedges, texts, autotexts = ax.pie( # type: ignore
         sizes,
         labels=list(labels),
         autopct='%1.1f%%',
@@ -40,7 +40,7 @@ def donut_plot(title, labels, sizes, palette='pastel'):
     fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(aspect="equal"))
     colors = sns.color_palette(palette)[0:len(labels)]
 
-    wedges, texts, autotexts = ax.pie(
+    wedges, texts, autotexts = ax.pie( # type: ignore
         sizes,
         labels=list(labels),
         autopct='%1.1f%%',
@@ -57,12 +57,12 @@ def donut_plot(title, labels, sizes, palette='pastel'):
         x, y = autotext.get_position()
         autotext.set_position((x * 1.2, y * 1.2))
 
-
+    
     plt.title(title, fontsize=16)
 
     return fig
 
-def bar_plot(title, x, y, xlabel='', ylabel='', palette='pastel'):
+def bar_plot(title, legend_title, x, y, xlabel='', ylabel='', palette='pastel'):
     fig, ax = plt.subplots(figsize=(8, 6))
     colors = sns.color_palette(palette)[0:len(y)]
 
@@ -72,6 +72,7 @@ def bar_plot(title, x, y, xlabel='', ylabel='', palette='pastel'):
     ax.set_xlabel(xlabel, fontsize=12)
     ax.set_ylabel(ylabel, fontsize=12)
     ax.tick_params(axis='x', rotation=45)
+    ax.legend(title=legend_title)
     sns.despine()
 
     return fig
@@ -121,15 +122,23 @@ def bar_of_pie_plot(
     # make figure and assign axis objects
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 5))
     fig.subplots_adjust(wspace=0)
+
+    if double_color_bar:
+        box = ax1.get_position()
+        ax1.set_position([box.x0, box.y0 + 0.2, box.width, box.height])
     
     # pie chart parameters
     pie_colors = sns.color_palette(palette)[:len(pie_sizes)]
-    explode = [0.07] + [0] * (len(pie_sizes) - 1)
+    explode = [0.06] + [0] * (len(pie_sizes) - 1)
     # rotate so that first wedge is split by the x-axis
     angle = -67.5 * pie_sizes[0]
+    radius = 0.8 if double_color_bar else 1.0
     wedges, *_ = ax1.pie(pie_sizes, autopct='%1.1f%%', startangle=angle,
-                        labels=pie_labels, explode=explode, colors=pie_colors)
-    ax1.set_title(title_pie, fontsize=16)
+                        labels=pie_labels, explode=explode, colors=pie_colors, radius=radius)
+    if double_color_bar:
+        ax1.text(0.5, -0.2, title_pie, fontsize=16, ha='center', transform=ax1.transAxes)
+    else:
+        ax1.set_title(title_pie, fontsize=16)
 
     # bar chart parameters
     bottom = 1
@@ -162,8 +171,12 @@ def bar_of_pie_plot(
     # draw top connecting line
     x = r * np.cos(np.pi / 180 * theta2) + center[0]
     y = r * np.sin(np.pi / 180 * theta2) + center[1]
-    con = ConnectionPatch(xyA=(-width / 2, (1 - sum(bar_sizes))), coordsA=ax2.transData,
+    if double_color_bar:
+        con = ConnectionPatch(xyA=(-width / 2, (1 - bar_sizes[1])), coordsA=ax2.transData,
                         xyB=(x, y), coordsB=ax1.transData)
+    else:
+        con = ConnectionPatch(xyA=(-width / 2, (1 - bar_height)), coordsA=ax2.transData,
+                        xyB=(x, y), coordsB=ax1.transData)        
     con.set_color((0, 0, 0))
     con.set_linewidth(2)
     ax2.add_artist(con)
@@ -208,7 +221,7 @@ def nested_pie_plot(title, vals, inner_labels, outer_labels, subtitle=""):
     outer_colors = [blues(0.55), oranges(0.55)]
     inner_colors = [blues(0.125), blues(0.25), blues(0.375), oranges(0.375), oranges(0.25), oranges(0.125)]
 
-    wedges_outer, texts_outer, autotexts_outer = ax.pie(
+    wedges_outer, texts_outer, autotexts_outer = ax.pie( # type: ignore
         vals_sum,
         radius=1,
         colors=outer_colors,
@@ -219,7 +232,7 @@ def nested_pie_plot(title, vals, inner_labels, outer_labels, subtitle=""):
         )
     format_texts(texts_outer, autotexts_outer)
 
-    wedges_inner, texts_inner, autotexts_inner = ax.pie(
+    wedges_inner, texts_inner, autotexts_inner = ax.pie( # type: ignore
         vals_flatten, radius=1-size,
         colors=inner_colors,
         wedgeprops=dict(width=size, edgecolor='w'),
