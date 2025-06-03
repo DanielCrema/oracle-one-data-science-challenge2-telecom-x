@@ -12,9 +12,6 @@
 # Imports
 import random
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-from generate_plots import pie_plot, donut_plot, bar_plot, barh_plot, line_plot, bar_of_pie_plot, nested_pie_plot
 from get_demographics_plots import get_demographics_plots as demographics
 from get_business_intelligence_plots import get_business_intelligence_plots as business_intelligence
 
@@ -113,12 +110,14 @@ fig_churn_gender_demographics = churn_demographics[4]
 fig_churn_distribution = bi_statistics[0]
 fig_churn_distribution_by_revenue = bi_statistics[1]
 fig_churn_distribution_by_partner = bi_statistics[2]
-fig_global_contract_stats = bi_statistics[3]
-fig_churn_contract_stats = bi_statistics[4]
-fig_global_internet_services = bi_statistics[5]
-fig_churn_internet_services = bi_statistics[6]
-fig_global_phone_services = bi_statistics[7]
-fig_churn_phone_services = bi_statistics[8]
+fig_global_internet_services = bi_statistics[3]
+fig_churn_internet_services = bi_statistics[4]
+fig_global_phone_services = bi_statistics[5]
+fig_churn_phone_services = bi_statistics[6]
+fig_global_contract_stats = bi_statistics[7]
+fig_churn_contract_stats = bi_statistics[8]
+fig_global_tenure_stats = bi_statistics[9]
+fig_churn_tenure_stats = bi_statistics[10]
 
 
 # Display
@@ -139,9 +138,10 @@ fig_global_seniority_demographics
 fig_global_gender_demographics
 
 # Business Intelligence
-fig_global_contract_stats
 fig_global_internet_services
 fig_global_phone_services
+fig_global_contract_stats
+fig_global_tenure_stats
 
 # Churn stats
 # 
@@ -153,6 +153,7 @@ fig_churn_seniority_demographics
 fig_churn_gender_demographics
 
 # Business Intelligence
-fig_churn_contract_stats
 fig_churn_internet_services
 fig_churn_phone_services
+fig_churn_contract_stats
+fig_churn_tenure_stats

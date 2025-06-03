@@ -10,7 +10,8 @@
 
 # #
 # Imports
-from generate_plots import donut_plot, pie_plot, bar_of_pie_plot
+import pandas as pd
+from generate_plots import donut_plot, pie_plot, bar_of_pie_plot, barh_plot
 
 def get_business_intelligence_plots(data, data_churn):
     churn_counts = data['Churn'].value_counts().reset_index()
@@ -95,12 +96,38 @@ def get_business_intelligence_plots(data, data_churn):
         sizes=[data_churn.query('PhoneService == "Yes"').shape[0], data_churn.query('PhoneService == "No"').shape[0]],
     )
 
+    def get_tenure_statistics(df, title):
+        tenure_counts = df['Tenure'].value_counts().reset_index()
+        tenure_counts.columns = ['Tenure', 'Count']
+        tenure_counts = tenure_counts.sort_values(by='Count', ascending=False)
+        tenure_counts = tenure_counts.head(15)
+        tenure_counts['Tenure'] = pd.Categorical(
+            tenure_counts['Tenure'],
+            categories=tenure_counts['Tenure'],  # keep current order
+            ordered=True
+        )
+        fig = barh_plot(
+                title=title,
+                x=tenure_counts['Count'],
+                y=tenure_counts['Tenure'],
+                xlabel='Contratantes',
+                ylabel='Duração do Contrato (Meses)',
+                legend=False
+        )
+
+        return fig
+    
+    fig_global_tenure_stats = get_tenure_statistics(data, 'Distribuição de Duração dos Contratos\n(Global)')
+    fig_churn_tenure_stats = get_tenure_statistics(data_churn, 'Distribuição de Duração dos Contratos\n(Evasão)')
+
     return (fig_churn_distribution,
             fig_churn_distribution_by_revenue,
             fig_churn_distribution_by_partner,
-            fig_global_contract_stats,
-            fig_churn_contract_stats,
             fig_global_internet_services,
             fig_churn_internet_services,
             fig_global_phone_services,
-            fig_churn_phone_services)
+            fig_churn_phone_services,
+            fig_global_contract_stats,
+            fig_churn_contract_stats,
+            fig_global_tenure_stats,
+            fig_churn_tenure_stats)

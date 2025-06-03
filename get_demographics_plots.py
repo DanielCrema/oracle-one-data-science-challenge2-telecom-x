@@ -14,13 +14,13 @@ from generate_plots import pie_plot, bar_plot, barh_plot, nested_pie_plot
 
 def get_demographics_plots(df, title, xlim):
     # General Demographics
-    combo_counts = df['Demographics'].value_counts().reset_index()
-    combo_counts.columns = ['Group', 'Count']
+    demographics_counts = df['Demographics'].value_counts().reset_index()
+    demographics_counts.columns = ['Group', 'Count']
     fig_general_demographics = bar_plot(
         title=title,
         legend_title="Pessoas",
-        x=combo_counts['Group'],
-        y=combo_counts['Count'],
+        x=demographics_counts['Group'],
+        y=demographics_counts['Count'],
         xlabel='Grupos: P=Parceiro, T=Terceira Idade, D=Dependentes',
         ylabel=''
     )

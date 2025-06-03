@@ -77,7 +77,7 @@ def bar_plot(title, legend_title, x, y, xlabel='', ylabel='', palette='pastel'):
 
     return fig
 
-def barh_plot(title, x, y, xlabel='', ylabel='', xlim=(0, 0), palette='pastel'):
+def barh_plot(title, x, y, xlabel='', ylabel='', xlim=(0, 0), palette='pastel', legend=True):
     new_xlim = ((min(x) * 0.9, max(x) * 1.1) if xlim == (0, 0) else (xlim[0], xlim[1]))
     fig, ax = plt.subplots(figsize=(8, 6))
     colors = sns.color_palette(palette)[0:len(x)]
@@ -92,6 +92,9 @@ def barh_plot(title, x, y, xlabel='', ylabel='', xlim=(0, 0), palette='pastel'):
 
     for i, v in enumerate(x):
         ax.text(v + (max(x) * 0.01), i, f'{v:,}', va='center', fontsize=10, color='black')
+
+    if not legend:
+        ax.get_legend().remove()
 
     return fig
 
