@@ -10,7 +10,7 @@
 
 # #
 # Imports
-from generate_plots import pie_plot, bar_plot, barh_plot, nested_pie_plot
+from modules.generate_plots import pie_plot, bar_plot, barh_plot, nested_pie_plot
 
 def get_demographics_plots(df, title, xlim):
     # General Demographics

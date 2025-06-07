@@ -11,7 +11,7 @@
 # #
 # Imports
 import pandas as pd
-from generate_plots import donut_plot, pie_plot, bar_of_pie_plot, barh_plot
+from modules.generate_plots import donut_plot, pie_plot, bar_of_pie_plot, barh_plot
 
 def get_business_intelligence_plots(data, data_churn):
     churn_counts = data['Churn'].value_counts().reset_index()
