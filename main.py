@@ -14,10 +14,7 @@ import streamlit as st
 from etl import etl
 from app_ui import streamlit_header, sidebar_credits
 
-try:
-    global_demographics, churn_demographics, bi_statistics, fiber_statistics = etl()
-except Exception as e:
-    st.error(f"ETL Failed: {e}")
+global_demographics, churn_demographics, bi_statistics, fiber_statistics = etl()
 
 # Initializing Streamlit app
 # 
