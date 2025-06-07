@@ -10,7 +10,6 @@
 
 # #
 # Imports
-import pandas as pd
 from modules.generate_plots import donut_plot, bar_plot
 
 def optic_fiber_analysis(data, data_churn):
