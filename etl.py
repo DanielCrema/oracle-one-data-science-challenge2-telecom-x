@@ -12,11 +12,13 @@
 # Imports
 import random
 import pandas as pd
+import streamlit as st
 import matplotlib.pyplot as plt
 from modules.get_demographics_plots import get_demographics_plots as demographics
 from modules.get_business_intelligence_plots import get_business_intelligence_plots as business_intelligence
 from modules.optic_fiber_analysis import optic_fiber_analysis as optic_fiber
 
+@st.cache_data
 def etl():
     # #
     # Extract
