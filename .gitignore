@@ -1,8 +1,2 @@
-# Ignore the base jupyter notebook
-*.ipynb
-
-# Ignore the dictionary
-telecomX_dicionario.md
-
 # Ignore python cache
 __pycache__
