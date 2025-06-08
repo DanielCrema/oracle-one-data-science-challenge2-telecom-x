@@ -57,7 +57,7 @@ This project features an **organized modular structure** for data processing and
 ## 🛠️ Stack
 [Python 3](https://www.python.org)
 
-[Numpy](https://numpy.org/) – Data manipulation.
+[Numpy](https://numpy.org/) – Numerical computing.
 
 [Pandas](https://pandas.pydata.org) – Data manipulation.
 
