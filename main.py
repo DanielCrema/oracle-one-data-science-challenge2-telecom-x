@@ -40,7 +40,7 @@ def home():
     st.subheader("Perda em faturamento", divider=True, anchor='revenue_loss')
     st.pyplot(bi_statistics[1])
     st.subheader("Insights:")
-    st.write("O faturamento perdido é proporcionalmente menor entre os evadidos. Uma boa notícia que pode fornecer insights interessantes sobre o problema.")
+    st.write("O ticket médio é proporcionalmente menor entre os evadidos. Uma boa notícia que pode fornecer insights interessantes sobre o problema.")
 
     # Create sidebar summary section
     st.sidebar.markdown("""
@@ -115,7 +115,7 @@ def bi_analysis():
     col1.pyplot(bi_statistics[9])
     col2.pyplot(bi_statistics[10])
     st.subheader("Insights:")
-    st.write("""- Ressalta-se na análise a prevalência de contratos mensais entre os clientes evadidos, especialmente clientes cujo tempo de contrato foi em torno de 6 meses. 87.9% das evasões ocorreram nesta categoria, o que é uma proporção considerável.""")
+    st.write("""- Ressalta-se na análise a prevalência de contratos mensais entre os clientes evadidos, especialmente clientes cujo tempo de contrato foi menor de 1 ano. 87.9% das evasões ocorreram nesta categoria, o que é uma proporção considerável.""")
     st.write("""- Essas observações corroboram a hipótese de que a crise econômica pode estar influenciando a decisão de evasão dos clientes jovens, porém é também um alarmante indício de que algo pode estar errado com a experiência do cliente em relação aos serviços oferecidos e/ou preços estabelecidos.""")
 
 

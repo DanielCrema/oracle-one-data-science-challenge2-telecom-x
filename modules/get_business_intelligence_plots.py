@@ -98,21 +98,25 @@ def get_business_intelligence_plots(data, data_churn):
 
     def get_tenure_statistics(df, title):
         tenure_counts = df['Tenure'].value_counts().reset_index()
-        tenure_counts.columns = ['Tenure', 'Count']
-        tenure_counts = tenure_counts.sort_values(by='Count', ascending=False)
-        tenure_counts = tenure_counts.head(15)
-        tenure_counts['Tenure'] = pd.Categorical(
-            tenure_counts['Tenure'],
-            categories=tenure_counts['Tenure'],  # keep current order
-            ordered=True
-        )
+        one_month_or_less = tenure_counts.query("Tenure == 0 or Tenure == 1")['count'].sum()
+        two_months = tenure_counts.query("Tenure == 2")['count'].sum()
+        less_than_six_months = tenure_counts.query("Tenure > 2 and Tenure < 6")['count'].sum()
+        semester = tenure_counts.query("Tenure == 6")['count'].sum()
+        semester_to_year = tenure_counts.query("Tenure > 6 and Tenure <= 12")['count'].sum()
+        year_to_two_years = tenure_counts.query("Tenure > 12 and Tenure <= 24")['count'].sum()
+        two_to_three_years = tenure_counts.query("Tenure > 24 and Tenure <= 36")['count'].sum()
+        more_than_three_years = tenure_counts.query("Tenure > 36")['count'].sum()
+        tenure_groups = pd.DataFrame({
+            'Tenure': ['Até 1 Mês', '2 Meses', '2 a 6 Meses', '6 Meses', '6 meses a 1 ano', '1 ano a 2 anos', '2 a 3 anos', 'Mais de 3 anos'],
+            'Count': [one_month_or_less, two_months, less_than_six_months, semester, semester_to_year, year_to_two_years, two_to_three_years, more_than_three_years]
+        }).sort_values(by='Count', ascending=False).reset_index(drop=True)
+        tenure_groups.rename(columns={'count': 'Count'}, inplace=True)
         fig = barh_plot(
                 title=title,
-                x=tenure_counts['Count'],
-                y=tenure_counts['Tenure'],
+                x=tenure_groups['Count'],
+                y=tenure_groups['Tenure'],
                 xlabel='Contratantes',
                 ylabel='Duração do Contrato (Meses)',
-                legend=False
         )
 
         return fig

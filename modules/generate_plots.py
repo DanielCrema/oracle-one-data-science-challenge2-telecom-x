@@ -62,7 +62,7 @@ def donut_plot(title, labels, sizes, palette='pastel'):
 
     return fig
 
-def bar_plot(title, legend_title, x, y, xlabel='', ylabel='', palette='pastel'):
+def bar_plot(title, x, y, xlabel='', ylabel='', palette='pastel', legend=True, legend_title=''):
     fig, ax = plt.subplots(figsize=(8, 6))
     colors = sns.color_palette(palette)[0:len(y)]
 
@@ -72,8 +72,16 @@ def bar_plot(title, legend_title, x, y, xlabel='', ylabel='', palette='pastel'):
     ax.set_xlabel(xlabel, fontsize=12)
     ax.set_ylabel(ylabel, fontsize=12)
     ax.tick_params(axis='x', rotation=45)
-    ax.legend(title=legend_title)
+    if not legend:
+        ax.get_legend().remove()
+    elif legend_title != '':
+        ax.legend(title=legend_title)
+    else:
+        pass
     sns.despine()
+
+    for i, v in enumerate(y):
+        ax.text(i, v + (max(y) * 0.01), f'{v:,}', ha='center', va='bottom', fontsize=10, color='black')
 
     return fig
 

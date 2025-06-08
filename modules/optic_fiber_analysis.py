@@ -31,11 +31,11 @@ def optic_fiber_analysis(data, data_churn):
     fiber_demographics_counts.columns = ['Group', 'Count']
     fig_global_distribution_by_fiber = bar_plot(
         title="Distribuição de Usuários - Fibra Ótica\n(Global)",
-        legend_title="Grupo",
         x=fiber_demographics_counts['Group'],
         y=fiber_demographics_counts['Count'],
         xlabel="Grupos: P=Parceiro, T=Terceira Idade, D=Dependentes",
         ylabel="",
+        legend=False
     )
 
     # Fiber churn demographics

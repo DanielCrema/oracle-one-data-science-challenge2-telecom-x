@@ -18,11 +18,11 @@ def get_demographics_plots(df, title, xlim):
     demographics_counts.columns = ['Group', 'Count']
     fig_general_demographics = bar_plot(
         title=title,
-        legend_title="Pessoas",
         x=demographics_counts['Group'],
         y=demographics_counts['Count'],
         xlabel='Grupos: P=Parceiro, T=Terceira Idade, D=Dependentes',
-        ylabel=''
+        ylabel='',
+        legend=False
     )
 
     # Demographics distribution
@@ -33,10 +33,10 @@ def get_demographics_plots(df, title, xlim):
         [get_values('Demographics == "Outros"'), (get_values('Demographics == "D"') + (get_values('Demographics == "TD"') / 2)), (get_values('Demographics == "T"') + (get_values('Demographics == "TD"') / 2))],
     ]
 
-    outer_labels = ['Parceiro', 'Solteiros']
-    inner_labels = ['T', 'D', 'Outros', 'Outros', 'D', 'T']
+    outer_labels = ['Possui Parceiro', 'Solteiros']
+    inner_labels = ['Terceira Idade', 'Possui Dependentes', 'Outros', 'Outros', 'Possui Dependentes', 'Terceira Idade']
     try:
-        fig_distribution_demographics = nested_pie_plot(title, vals=vals, inner_labels=inner_labels, outer_labels=outer_labels, subtitle="Grupos: T=Terceira Idade, D=Dependentes")
+        fig_distribution_demographics = nested_pie_plot(title, vals=vals, inner_labels=inner_labels, outer_labels=outer_labels, subtitle="Grupos: Distribuição entre Casados/Amasiados e Solteiros")
     except ValueError as e:
         print("Caught ValueError:", e)
 
@@ -50,12 +50,12 @@ def get_demographics_plots(df, title, xlim):
         positive_values.append(positive)
     positive_values.append(df.query('Demographics == "Outros"').shape[0])
     
-    senior_partner_dependents_columns = ['Idosos', 'Parceiro', 'Dependentes', 'Outros']
+    senior_partner_dependents_columns = ['Idosos', 'Parceiro', 'Possui Dependentes', 'Outros']
     positive_pairs = list(zip(senior_partner_dependents_columns, positive_values))
     positive_pairs.sort(key=lambda x: x[1], reverse=False)
 
     positive_columns, positive_values = zip(*positive_pairs)
-    fig_positive_demographics = barh_plot(title, x=positive_values, y=positive_columns, xlabel='É / Possui', ylabel='', xlim=xlim)
+    fig_positive_demographics = barh_plot(title, x=positive_values, y=positive_columns, xlabel='Clientes por Categoria', ylabel='', xlim=xlim)
 
     # Seniority Demographics
     fig_seniority_demographics = pie_plot(
