@@ -74,10 +74,10 @@ This project features an **organized modular structure** for data processing and
 ├── main.py             # Main Streamlit application
 │
 ├── modules/
-│   ├── generate_plots.py                     # Abstracts chart generation
-│   ├── get_business_intelligence_plots.py    # Generate business charts
-│   ├── get_demographics_plots.py             # Generate demographic charts
-│   └── optic_fiber_analysis.py               # Optic fiber analysis
+│   ├── generate_plots.py                   # Abstracts chart generation
+│   ├── get_business_intelligence_plots.py  # Generate business charts
+│   ├── get_demographics_plots.py           # Generate demographic charts
+│   └── optic_fiber_analysis.py             # Optic fiber analysis
 │
 ├── etl.py               # ETL functions
 │
