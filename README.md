@@ -1,4 +1,4 @@
-# Telecom X 📊🛍️
+# Telecom X 📊📡
 This project offers a complete **statistical analysis** platform about the churn in a telecomunications company, helping to visualize, compare, and download key data about demographical and business intelligence metrics of customers.
 
 Developed with **Streamlit**, it provides an intuitive, interactive, and responsive web application, accessible on desktops, laptops, tablets, and smartphones.
