@@ -37,7 +37,7 @@ def home():
     st.subheader("O problema:", divider=True, anchor='problem')
     st.pyplot(bi_statistics[0])
     st.write("A empresa está perdendo clientes e precisa tomar medidas para reduzir a evasão.")
-    st.subheader("Perda em faturamento", divider=True, anchor='revenue_loss')
+    st.subheader("Faturamento", divider=True, anchor='revenue')
     st.pyplot(bi_statistics[1])
     st.subheader("Insights:")
     st.write("O ticket médio é proporcionalmente menor entre os evadidos. Uma boa notícia que pode fornecer insights interessantes sobre o problema.")
@@ -47,7 +47,7 @@ def home():
     ### 📑 Sumário
 
     - [O problema](#problem)
-    - [Analisando o faturamento](#revenue_loss)
+    - [Analisando o faturamento](#revenue)
     <hr/>
     """, unsafe_allow_html=True)
 
