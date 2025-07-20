@@ -92,6 +92,14 @@ def etl():
 
     return global_demographics, churn_demographics, bi_statistics, fiber_statistics
 
+
+# # #
+# Commands
+
+# # Code to export data
+# #
+# data.to_csv("TelecomX_Data_Transformed.csv", index=False)
+
 # # Unpacking
 # # 
 # fig_global_general_demographics = global_demographics[0]
